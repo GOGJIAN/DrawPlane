@@ -10,8 +10,9 @@ public class Dot {
     private PointF mCoordinate;
     //半径
     private float Size;
-    public Dot(PointF coordinate){
+    public Dot(PointF coordinate,float size){
         this.mCoordinate = coordinate;
+        this.Size = size;
     }
 
     public PointF getCoordinate() {
