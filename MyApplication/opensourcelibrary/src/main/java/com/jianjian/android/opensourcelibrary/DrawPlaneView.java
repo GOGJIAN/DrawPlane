@@ -28,19 +28,24 @@ public class DrawPlaneView extends View {
     private Path mCurrentPath;
     private Paint mBackGroundPaint;
     private Paint mPenPaint;
-    private float mDotSize = 2;
+    private float mDotSize = 5;
+    private int background = 0xfff8efe0;
+    private int penColor = 0xFF000000;
     public DrawPlaneView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mBackGroundPaint = new Paint();
-        mBackGroundPaint.setColor(0xfff8efe0);
+        mBackGroundPaint.setColor(background);
 
         mPenPaint = new Paint();
-        mPenPaint.setColor(0xFF000000);
+        mPenPaint.setColor(penColor);
         mPenPaint.setStyle(Paint.Style.STROKE);
-        mPenPaint.setStrokeWidth(5);
+        mPenPaint.setStrokeWidth(mDotSize);
 
     }
 
+    public void setEraser(boolean isE){
+        mPenPaint.setColor(isE?background:penColor);
+    }
 
     public void setDotSize(float size){
         this.mDotSize = size;
@@ -55,18 +60,14 @@ public class DrawPlaneView extends View {
         super.onDraw(canvas);
         canvas.drawPaint(mBackGroundPaint);
         for(Path path : mPaths){
-//            float left = dot.getCoordinate().x-dot.getSize();
-//            float right = dot.getCoordinate().x+dot.getSize();
-//            float bottom = dot.getCoordinate().y+dot.getSize();
-//            float top = dot.getCoordinate().y-dot.getSize();
-//            canvas.drawOval(left,top,right,bottom,mPenPaint);
             canvas.drawPath(path,mPenPaint);
-
         }
         Log.d("My", "onDraw: ");
     }
     float lastX ;
     float lastY ;
+    float cX ;
+    float cY ;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -74,6 +75,8 @@ public class DrawPlaneView extends View {
             case MotionEvent.ACTION_DOWN:
                 lastX = event.getX();
                 lastY = event.getY();
+                cX = event.getX();
+                cY = event.getY();
                 mCurrentPath = new Path();
                 mCurrentPath.moveTo(lastX, lastY);
                 mPaths.add(mCurrentPath);
@@ -81,12 +84,16 @@ public class DrawPlaneView extends View {
             case MotionEvent.ACTION_MOVE:
                 float dx = Math.abs(lastX-event.getX());
                 float dy = Math.abs(lastY-event.getY());
-                if(dx>3||dy>3) {
-                    mCurrentPath.quadTo(lastX, lastY, event.getX(), event.getY());
+
+
+                if(dx>=3||dy>=3) {
+                    mCurrentPath.quadTo(cX,cY, event.getX(), event.getY());
                     lastX = event.getX();
                     lastY = event.getY();
                     invalidate();
                 }
+                cX = event.getX();
+                cY = event.getY();
                 break;
             case MotionEvent.ACTION_UP:
                 mCurrentPath = null;
