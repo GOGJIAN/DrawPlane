@@ -1,5 +1,6 @@
 package com.jianjian.android.opensourcelibrary.models;
 
+import android.graphics.Path;
 import android.graphics.PointF;
 
 /**
@@ -7,20 +8,17 @@ import android.graphics.PointF;
  */
 
 public class Dot {
-    private PointF mCoordinate;
-    //半径
+
     private float Size;
-    public Dot(PointF coordinate,float size){
-        this.mCoordinate = coordinate;
-        this.Size = size;
+    private int color;
+    private Path mPath;
+
+    public Path getPath() {
+        return mPath;
     }
 
-    public PointF getCoordinate() {
-        return mCoordinate;
-    }
-
-    public void setCoordinate(PointF coordinate) {
-        mCoordinate = coordinate;
+    public void setPath(Path path) {
+        mPath = path;
     }
 
     public float getSize() {
@@ -29,5 +27,13 @@ public class Dot {
 
     public void setSize(float size) {
         Size = size;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
