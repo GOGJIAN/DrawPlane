@@ -46,6 +46,11 @@ public class DrawPlaneView extends View {
 
     }
 
+    public void clear(){
+        mDots.clear();
+        invalidate();
+    }
+
     public void revoke(){
         mDots.remove(mDots.size()-1);
         invalidate();

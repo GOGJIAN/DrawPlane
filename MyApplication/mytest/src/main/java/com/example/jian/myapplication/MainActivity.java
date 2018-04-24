@@ -1,5 +1,6 @@
 package com.example.jian.myapplication;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox isEraser;
     private EditText lineWidth;
     private Button okBtn;
+    private FloatingActionButton clearBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(lineWidth.getText()!=null)
                 dpv.setDotSize(Float.valueOf(lineWidth.getText().toString()));
+            }
+        });
+        clearBtn = (FloatingActionButton)findViewById(R.id.fab);
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dpv.clear();
             }
         });
         dpv.setDotSize(5);
